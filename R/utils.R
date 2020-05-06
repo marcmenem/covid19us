@@ -53,7 +53,8 @@ request <- function(url) { # nocov start
     names(tbl) %>%
     .[stringr::str_detect(., "date|update|time")]
 
-  tbl %>%
+
+  suppressWarnings( tbl %>%
     mutate_at(
       date_vars,
       clean_date
@@ -61,6 +62,7 @@ request <- function(url) { # nocov start
     mutate(
       request_datetime = lubridate::now()
     )
+  )
 } # nocov end
 
 try_request <- purrr::possibly(
